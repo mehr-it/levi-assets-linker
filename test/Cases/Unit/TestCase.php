@@ -4,7 +4,7 @@
 	namespace MehrItLeviAssetsLinkerTest\Cases\Unit;
 
 
-	abstract class TestCase extends \MehrItLeviAssetsTest\Unit\Cases\TestCase
+	abstract class TestCase extends \PHPUnit\Framework\TestCase
 	{
 
 	}
