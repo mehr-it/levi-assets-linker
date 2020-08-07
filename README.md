@@ -63,7 +63,7 @@ The static `link` method generates links using the previously set configuration:
 The first argument is expected to hold a PSR-7 compatible representation of the request. This request
 object is passed to all link filters to they can pick the most suitable asset build.
 
-The second argument must contain an associative array with all asset builds' path. The build name is
+The second argument must contain an associative array with all asset builds' paths. The build name is
 used as array key.
 
 The `$linkFilters` argument allows to apply custom filters for this call. It must be an array
@@ -103,7 +103,7 @@ prefix search. Following example filters for jpg builts only:
         'png_large' => 'large/image.png',
     ];
     
-    AssetLinker::link($request, $paths, [['built', 'jpg']]);
+    AssetLinker::link($request, $paths, [['pfx', 'jpg']]);
     
 ### host
 The `ReplaceAuthorityFilter` allows to overwrite the host (authority) part the generated URL. This is
