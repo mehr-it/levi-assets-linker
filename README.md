@@ -1,4 +1,7 @@
 # Levi assets linker
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/mehr-it/levi-assets-linker.svg?style=flat-square)](https://packagist.org/packages/mehr-it/levi-assets-linker)
+[![Build Status](https://travis-ci.org/mehr-it/levi-assets-linker.svg?branch=master)](https://travis-ci.org/mehr-it/levi-assets-linker)
+
 Framework independent linker component for the [mehr-it/levi-assets](https://packagist.org/packages/mehr-it/levi-assets) 
 package. It allows to generate links from passed asset build paths outside of the Laravel framework. 
 
