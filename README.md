@@ -72,7 +72,7 @@ of filter definitions. Each filter definition is an array itself and consists of
 to the filter. Filters are applied in the oder they are passed. The configured `'default_filters'`
 are applied before the ones passed as argument.
 
-The last argument allows to query parameters to the URL. They can be passed as array or as already
+The last argument allows to add query parameters to the URL. They can be passed as array or as already
 encoded query string.
 
 
