@@ -10,6 +10,7 @@
 	use MehrIt\LeviAssetsLinker\Filters\BuiltNamePrefixFilter0;
 	use MehrIt\LeviAssetsLinker\Filters\PreferWebPFilter;
 	use MehrIt\LeviAssetsLinker\Filters\ReplaceAuthorityFilter;
+	use MehrIt\LeviAssetsLinker\Filters\ReplacePathFilter;
 	use MehrIt\LeviAssetsLinker\Filters\ReplaceSchemeFilter;
 	use Psr\Http\Message\RequestInterface;
 	use RuntimeException;
@@ -17,11 +18,12 @@
 	class AssetLinker implements AssetLinkerContract
 	{
 		const DEFAULT_FILTERS = [
-			'built' => BuiltNameFilter::class,
-			'host'  => ReplaceAuthorityFilter::class,
-			'pfx'   => BuiltNamePrefixFilter0::class,
-			'proto' => ReplaceSchemeFilter::class,
-			'webp'  => PreferWebPFilter::class,
+			'built'       => BuiltNameFilter::class,
+			'host'        => ReplaceAuthorityFilter::class,
+			'pfx'         => BuiltNamePrefixFilter0::class,
+			'proto'       => ReplaceSchemeFilter::class,
+			'replacePath' => ReplacePathFilter::class,
+			'webp'        => PreferWebPFilter::class,
 		];
 
 		protected static $config = null;
@@ -30,7 +32,6 @@
 		 * @var AssetLinkerContract|null
 		 */
 		protected static $instance;
-
 
 
 		/**
@@ -100,9 +101,6 @@
 		}
 
 
-
-
-
 		protected $filters = [];
 
 		protected $pathPrefix;
@@ -127,7 +125,7 @@
 
 			// prepare filters
 			$filters = [];
-			foreach(array_merge($this->defaultLinkFilters, $linkFilters) as $currFilterDef) {
+			foreach (array_merge($this->defaultLinkFilters, $linkFilters) as $currFilterDef) {
 
 				$filters[] = [
 					$this->filter(array_shift($currFilterDef)),
@@ -136,9 +134,9 @@
 			}
 
 			// filter paths
-			foreach($filters as [$filter, $options]) {
+			foreach ($filters as [$filter, $options]) {
 				/** @var AssetLinkFilter $filter */
-				$filter->filterPaths($request,$paths, $options);
+				$filter->filterPaths($request, $paths, $options);
 			}
 
 			if (!count($paths))
@@ -151,7 +149,7 @@
 			// process link
 			foreach ($filters as [$filter, $options]) {
 				/** @var AssetLinkFilter $filter */
-				$filter->processLink($request,$link, $options);
+				$filter->processLink($request, $link, $options);
 			}
 
 			return $link;

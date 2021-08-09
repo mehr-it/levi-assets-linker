@@ -19,7 +19,7 @@ You can install the package via composer:
 ## The role of the linker
 
 Despite generating links, the job of the linker is to pick the most suitable asset built for the given
-asset. Therefore it receives a list with the paths to all builts of an asset to pick one for the link.
+asset. Therefore it receives a list with the paths to all builds of an asset to pick one for the link.
 Without any filter, the linker would simply pick the first built to generate a link for. However, 
 link filters may modify (sort, remove, ...) the built list. They can also modify the generated URL
 after the linker has generated it from the path.
@@ -80,8 +80,8 @@ encoded query string.
 The linker package comes with some predefined filters which can be used out of the box.
 
 ### built
-The `BuiltNameFilter` allows to specify a which builts of the assets can be used for the link. 
-Following example filters for jpg builts only:
+The `BuiltNameFilter` allows to specify a which builds of the assets can be used for the link. 
+Following example filters for jpg builds only:
 
     $paths = [
         'jpg_small' => 'small/image.jpg',
@@ -93,8 +93,8 @@ Following example filters for jpg builts only:
     AssetLinker::link($request, $paths, [['built', 'jpg_small', 'jpg_large']]);
     
 ### pfx
-The `BuiltNamePrefixFilter` allows to specify a which builts of the assets can be used by applying a
-prefix search. Following example filters for jpg builts only:
+The `BuiltNamePrefixFilter` allows to specify a which builds of the assets can be used by applying a
+prefix search. Following example filters for jpg builds only:
 
     $paths = [
         'jpg_small' => 'small/image.jpg',
@@ -117,11 +117,18 @@ The `ReplaceSchemeFilter` allows to overwrite the protocol (scheme) part the gen
 can be used to force HTTPS. Default is to use the same as the request scheme.
     
     AssetLinker::link($request, $paths, [['proto', 'https']]);
-    
+
+### replacePath
+
+The `ReplacePathFilter` allows to do a regex replacement for the path component of the generated URL. This 
+might be useful if e.g. you need to a prefix to the path. **Note: the path always starts with "/" if not empty**
+
+    // prepend prefix "_pfx" to the path
+    AssetLinker::link($request, $paths, [['proto', 'https', '%^(/.*$%', '_pfx$1']]);
 
 ### webp
 The `PreferWebPFilter` allows to prefer webp images over other formats when the browser supports 
-them. The arguments must identify the webp image builts by their name.  
+them. The arguments must identify the webp image builds by their name.  
     
     $paths = [
             'webp_small' => 'small/image.webp',
@@ -133,7 +140,7 @@ them. The arguments must identify the webp image builts by their name.
     AssetLinker::link($request, $paths, [['webp', 'webp_small', 'webp_large']]);
     
 If the browser has included 'image/webp' to the request's accept header, the builts "webp_small" and
-"webp_large" will be sorted first in the builts array.
+"webp_large" will be sorted first in the builds array.
 
-If the browser does not indicate webp support, webp builts are removed from the list, **if there are
+If the browser does not indicate webp support, webp builds are removed from the list, **if there are
 others available**.
