@@ -124,7 +124,7 @@ The `ReplacePathFilter` allows to do a regex replacement for the path component 
 might be useful if e.g. you need to a prefix to the path. **Note: the path always starts with "/" if not empty**
 
     // prepend prefix "_pfx" to the path
-    AssetLinker::link($request, $paths, [['proto', 'https', '%^(/.*$%', '_pfx$1']]);
+    AssetLinker::link($request, $paths, [['replacePath', '%^(/.*$%', '_pfx$1']]);
 
 ### webp
 The `PreferWebPFilter` allows to prefer webp images over other formats when the browser supports 
